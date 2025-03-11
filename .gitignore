@@ -1,0 +1,9 @@
+# Ignoriši .env fajl sa tajnim ključevima
+.env
+
+# Ignoriši node_modules
+node_modules/
+
+# Ostalo (opcionalno)
+*.log
+.DS_Store
