@@ -7,24 +7,18 @@ const app = express();
 
 // CORS konfiguracija za Webflow i Render
 const allowedOrigins = [
-  'https://www.transferstosplit.com/', // Zamijeni sa tvojim stvarnim Webflow domenom
-  'https://stripe-payment-backend-fywd.onrender.com' // Dodaj ako želiš dopustiti i backend URL
+  'https://www.transferstosplit.com', // Tvoj frontend
+  'https://stripe-payment-backend-fywd.onrender.com' // Backend (opcionalno)
 ];
 
 app.use(cors({
-  origin: function (origin, callback) {
-    // Dopusti zahtjeve bez origin header-a (npr. Postman)
-    if (!origin) return callback(null, true);
-    
-    if (allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  methods: ['POST'], // Dopusti samo POST metode
-  credentials: true
+  origin: allowedOrigins,
+  methods: ['POST', 'OPTIONS'], // Dopusti OPTIONS za preflight
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
+
+// Rukovanje OPTIONS zahtjevima (preflight)
+app.options('*', cors());
 
 app.use(express.json());
 
